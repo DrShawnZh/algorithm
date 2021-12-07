@@ -1,0 +1,1706 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<!-- <script src="./erfen.js"></script> -->
+<!-- <script src="./kspx.js"></script> -->
+<!-- <script src="./tlsf.js"></script> -->
+<!-- <script src="./reg.js"></script> -->
+<!-- <script src="./gbpx.js"></script> -->
+<!-- <script src="./erchashu.js"></script> -->
+<script src="./kmp.js"></script>
+<script>
+  /**
+   * @param {number[]} nums
+   * @return {number}
+   */
+  // var findMaximumXOR = function (nums) {
+  //   debugger
+  //   const HIGH_BIT = 30;
+  //   let x = 0;
+  //   for (let k = HIGH_BIT; k >= 0; --k) {
+  //     const seen = new Set();
+  //     // 将所有的 pre^k(a_j) 放入哈希表中
+  //     for (const num of nums) {
+  //       // 如果只想保留从最高位开始到第 k 个二进制位为止的部分
+  //       // 只需将其右移 k 位
+  //       const xx = num >> k;
+  //       seen.add(xx);
+  //     }
+
+  //     // 目前 x 包含从最高位开始到第 k+1 个二进制位为止的部分
+  //     // 我们将 x 的第 k 个二进制位置为 1，即为 x = x*2+1
+  //     const xNext = x * 2 + 1;
+  //     let found = false;
+
+  //     // 枚举 i
+  //     for (const num of nums) {
+  //       const xx = num >> k;
+  //       const yy = xNext ^ xx;
+  //       if (seen.has(yy)) {
+  //         found = true;
+  //         break;
+  //       }
+  //     }
+
+  //     if (found) {
+  //       x = xNext;
+  //     } else {
+  //       // 如果没有找到满足等式的 a_i 和 a_j，那么 x 的第 k 个二进制位只能为 0
+  //       // 即为 x = x*2
+  //       x = xNext - 1;
+  //     }
+  //   }
+  //   return x;
+  // };
+
+  // findMaximumXOR([3, 10, 5, 25, 2, 8])
+
+  // var twoSum = function (nums, target) {
+  //   const map = new Map();
+  //   for (let i = 0; i < nums.length; i++) {
+  //     if (map.has(target - nums[i])) {
+  //       return [map.get(target - nums[i]), i]
+  //     } else {
+  //       map.set(nums[i], i)
+  //     }
+  //   }
+  //   return []
+  // };
+
+  // console.log(twoSum([2, 7, 10, 15], 9))
+
+  // var topKFrequent = function (words, k) {
+
+  //   const map = new Map();
+
+  //   for (let i = 0, len = words.length; i < len; i++) {
+  //     const it = words[i];
+  //     map.set(it, (map.get(it) || 0) + 1)
+  //   }
+  //   const rec = [];
+  //   for (const entry of map.keys()) {
+  //     rec.push(entry);
+  //   }
+  //   rec.sort((word1, word2) => {
+  //     return map.get(word1) === map.get(word2) ? word1.localeCompare(word2) : map.get(word2) - map.get(word1);
+  //   })
+  //   return rec.slice(0, k);
+
+  // };
+  // console.log(topKFrequent(["i", "love", "leetcode", "i", "love", "coding"], 2))
+
+  /**
+   * leedcode 1035
+   * 两条不相交的线
+   */
+  // var maxUncrossedLines = function (nums1, nums2) {
+  //   const m = nums1.length,
+  //     n = nums2.length;
+  //   const dp = new Array(m + 1).fill(0).map(() => new Array(n + 1).fill(0));
+  //   for (let i = 1; i <= m; i++) {
+  //     const num1 = nums1[i - 1];
+  //     for (let j = 1; j <= n; j++) {
+  //       const num2 = nums2[j - 1];
+  //       if (num1 === num2) {
+  //         dp[i][j] = dp[i - 1][j - 1] + 1;
+  //       } else {
+  //         dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+  //       }
+  //     }
+  //   }
+  //   return dp[m][n];
+  // };
+
+  // console.log(maxUncrossedLines([1, 1, 2, 1, 2], [1, 3, 2, 3, 1]))
+
+  /** 
+   * leedcode 664
+   * 奇怪的打印机
+   */
+
+  // var strangePrinter = function (s) {
+  //   debugger
+  //   const n = s.length;
+  //   const f = new Array(n).fill(0).map(() => new Array(n).fill(0));
+  //   for (let i = n - 1; i >= 0; i--) {
+  //     f[i][i] = 1;
+  //     for (let j = i + 1; j < n; j++) {
+  //       if (s[i] == s[j]) {
+  //         f[i][j] = f[i][j - 1];
+  //       } else {
+  //         let minn = Number.MAX_SAFE_INTEGER;
+  //         for (let k = i; k < j; k++) {
+  //           minn = Math.min(minn, f[i][k] + f[k + 1][j]);
+  //         }
+  //         f[i][j] = minn;
+  //       }
+  //     }
+  //   }
+  //   return f[0][n - 1];
+  // };
+
+  // console.log(strangePrinter("tbgtgb"))
+
+  /** 
+   * leedcode 1787
+   * 使所有区间的异或结果为零
+   */
+
+  // var minChanges = function (nums, k) {
+  //   // x 的范围为 [0, 2^10)
+  //   const MAXX = 2 ** 10;
+
+  //   const n = nums.length;
+  //   let f = new Array(MAXX).fill(Number.MAX_VALUE);
+  //   // 边界条件 f(-1,0)=0
+  //   f[0] = 0;
+
+  //   for (let i = 0; i < k; i++) {
+  //     // 第 i 个组的哈希映射
+  //     const count = new Map();
+  //     let size = 0;
+  //     for (let j = i; j < n; j += k) {
+  //       count.has(nums[j]) ? count.set(nums[j], count.get(nums[j]) + 1) : count.set(nums[j], 1);
+  //       size++;
+  //     }
+
+  //     // 求出 t2
+  //     const t2min = Math.min(...f);
+
+  //     const g = new Array(MAXX).fill(t2min);
+  //     for (let mask = 0; mask < MAXX; mask++) {
+  //       // t1 则需要枚举 x 才能求出
+  //       for (const [x, countx] of count.entries()) {
+  //         g[mask] = Math.min(g[mask], f[mask ^ x] - countx);
+  //       }
+  //     }
+
+  //     // 别忘了加上 size
+  //     for (const [index, val] of g.entries()) {
+  //       f[index] = val + size;
+  //     }
+  //   }
+
+  //   return f[0];
+  // };
+
+  /**
+   * 1190. 反转每对括号间的子串
+   */
+  // var reverseParentheses = function (s) {
+  //   let len = s.length;
+  //   let i = 0;
+  //   let j = len - 1;
+
+  //   while (i < j) {
+  //     debugger
+  //     if (s[i] === '(' && s[j] !== ')') {
+  //       j--
+  //     } else if (s[i] !== '(' && s[j] === ')') {
+  //       i++
+  //     } else if (s[i] !== '(' && s[j] !== ')') {
+  //       i++;
+  //       j--;
+  //     } else {
+  //       break;
+  //     }
+  //   }
+
+  //   if (i >= j) {
+  //     return s
+  //   }
+
+  //   return s.slice(0, i) + reverseParentheses(s.slice(i + 1, j).split("").reverse().map(it => {
+  //     if (it === '(') {
+  //       return ")"
+  //     } else if (it === ')') {
+  //       return "("
+  //     } else {
+  //       return it
+  //     }
+  //   }).join("")) + s.slice(j + 1, len)
+  // };
+  // console.log(reverseParentheses("(abcd)"))
+  // leedcode
+  // le((co)te)de
+  // leet(oc)de
+  // leetcode
+
+  /**
+   * 461 汉明距离
+   */
+  var hammingDistance = function (x, y) {
+    let cnt = 0;
+    while (x != 0 || y != 0) {
+      if (x % 2 !== y % 2) {
+        cnt++
+      }
+      x = x >> 1;
+      y = y >> 1
+    }
+    return cnt
+  };
+
+  /**
+   * 477 汉明距离总和
+   */
+  // var totalHammingDistance = function (nums) {
+  //   const len = nums.length;
+  //   let cnt = 0;
+  //   for (let i = 0; i < len - 1; i++) {
+  //     for (let j = i + 1; j < len; j++) {
+  //       console.log(hammingDistance(nums[i], nums[j]))
+  //       cnt += hammingDistance(nums[i], nums[j])
+  //     }
+  //   }
+  //   return cnt
+  // };
+  // console.log(totalHammingDistance([4, 14, 2]))
+
+  /**
+   * 342 4的幂
+   */
+  // var isPowerOfFour = function (n) {
+  //   debugger
+  //   if (n === 0) {
+  //     return false
+  //   }
+  //   if (n === 1) {
+  //     return true
+  //   }
+  //   let yu = n % 4;
+  //   if (yu === 0) {
+  //     return isPowerOfFour(n / 4)
+  //   } else {
+  //     return false
+  //   }
+  // };
+  // console.log(isPowerOfFour(3))
+
+  /**
+   * 1744. 你能在你最喜欢的那天吃到你最喜欢的糖果吗？
+   */
+  var canEat = function (candiesCount, queries) {
+    let len = queries.length;
+    let arr = []
+
+    function getT(total = 0, arr) {
+      let candy = [];
+      for (let i = 0; i < candiesCount.length; i++) {
+        total += arr[i];
+        candy.push(total)
+      }
+      return candy;
+    }
+    let candies = getT(0, candiesCount)
+
+    for (let i = 0; i < len; i++) {
+      const [type, day, per] = queries[i];
+      const total = [candies[type - 1] || 0 + 1, candies[type]]
+      const section = [day * 1 + 1, (day + 1) * per];
+      if (i == 24) {
+        console.log(24, total, section, queries[24], candies[85])
+        console.log(total[0] <= section[1] && total[1] > section[0])
+      }
+      arr.push(total[0] <= section[1] && total[1] > section[0])
+
+    }
+    return arr
+  };
+
+
+  /**
+   * 523. 连续的子数组和
+   */
+  var checkSubarraySum = function (nums, k) {
+    const m = nums.length;
+    if (m < 2) {
+      return false;
+    }
+    const map = new Map();
+    map.set(0, -1);
+    let remainder = 0;
+    for (let i = 0; i < m; i++) {
+      remainder = (remainder + nums[i]) % k;
+      if (map.has(remainder)) {
+        const prevIndex = map.get(remainder);
+        if (i - prevIndex >= 2) {
+          return true;
+        }
+      } else {
+        map.set(remainder, i);
+      }
+    }
+    return false;
+  };
+
+  /**
+   * 525. 连续数组
+   */
+  var findMaxLength = function (nums) {
+    const len = nums.length;
+    let max = 0;
+    let map = new Map();
+    map.set(0, -1);
+
+    let prefix = 0;
+    for (let i = 0; i < len; i++) {
+      debugger
+      const per = nums[i] ? 1 : -1;
+      prefix = prefix + per;
+      if (typeof map.get(prefix) === 'number') {
+        const prevI = map.get(prefix)
+        max = Math.max(max, i - prevI)
+      } else {
+        map.set(prefix, i)
+      }
+    }
+
+    return max
+  };
+
+  /**
+   * 160. 相交链表
+   */
+  var getIntersectionNode = function (headA, headB) {
+
+    // let set = new Set();
+
+    // let testA = headA;
+    // while (testA) {
+    //   debugger
+    //   set.add(testA)
+    //   testA = testA.next
+    // }
+    // let testB = headB;
+    // while (testB) {
+    //   if (set.has(testB)) {
+    //     return testB
+    //   }
+    //   testB = testB.next
+    // }
+    // return null;
+
+    /**
+     * 双指针法
+     * 循环遍历A，B两个链表，如果有交点，那遍历的次数一定是相等的，并且会有相等的情况
+     */
+    if (headA === null || headB === null) {
+      return null
+    }
+
+    let testA = headA,
+      testB = headB;
+    while (testA !== testB) {
+      testA = testA === null ? headB : testA.next
+      testB = testB === null ? headA : testB.next
+    }
+    return testA
+  };
+
+
+  /**
+   * 203. 移除链表元素
+   */
+
+  const com = {
+    val: 1,
+    next: {
+      val: 2,
+      next: {
+        val: 6,
+        next: {
+          val: 3,
+          next: {
+            val: 4,
+            next: {
+              val: 5,
+              next: {
+                val: 6,
+                next: null
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  var removeElements = function (head, val) {
+    // if (head === null) return head
+    // let cur = head;
+    // let res = {
+    //   val: 'test',
+    //   next: null
+    // };
+    // let add;
+    // while (cur) {
+    //   debugger
+    //   if (cur.val !== val) {
+    //     if (add) {
+    //       add.next = {
+    //         val: cur.val,
+    //         next: null
+    //       }
+    //       add = add.next
+    //     } else {
+    //       res.next = {
+    //         val: cur.val,
+    //         next: null
+    //       }
+    //       add = res.next
+    //     }
+    //   }
+    //   cur = cur.next;
+    // }
+
+    // return res.next
+
+    // let tempNode = {
+    //   val: -1,
+    //   next: null
+    // };
+    // tempNode.next = head;
+    // let tempHead = tempNode;
+
+    // while (tempNode) {
+    //   debugger
+    //   const nextNode = tempNode.next;
+    //   if (nextNode && nextNode.val === val) {
+    //     tempNode.next = nextNode.next;
+    //   } else {
+    //     tempNode = nextNode;
+    //   }
+    // }
+
+    // return tempHead.next;
+
+    let res = {
+      val: -1,
+      next: null
+    }
+    res.next = head;
+    let tmp = res;
+
+    while (res) {
+      const next = res.next
+      if (next && next.val === val) {
+        res.next = next.next
+      } else {
+        res = next
+      }
+    }
+    return tmp.next
+  };
+
+
+  /**
+   * 494. 目标和
+   */
+  var findTargetSumWays = function (nums, target) {
+
+    let cnt = 0;
+    const len = nums.length;
+    const getSum = (tot, index) => {
+      if (index === len) {
+        if (tot === target) {
+          cnt++
+        }
+      } else {
+        getSum(tot + nums[index], index + 1);
+        getSum(tot - nums[index], index + 1)
+      }
+    }
+
+    getSum(0, 0)
+
+    return cnt
+  };
+
+  /**
+   * 1049. 最后一块石头的重量 II
+   */
+  var lastStoneWeightII = function (stones) {
+    const sum = stones.reduce((memo, i) => (memo + i), 0);
+    const m = Math.floor(sum / 2);
+    const dp = new Array(m + 1).fill(0);
+    for (let i = 0; i < stones.length; i++) {
+      const weight = stones[i];
+      for (let j = m; j >= weight; j--) {
+        dp[j] = Math.max(dp[j], dp[j - weight] + weight);
+      }
+    }
+    return sum - 2 * dp[m];
+  };
+
+  /**
+   * 518. 零钱兑换 II 
+   * 动态规划
+   */
+  var change = function (amount, coins) {
+    const len = coins.length;
+
+    const dp = new Array(len + 1).fill(0).map(() => {
+      return new Array(amount + 1).fill(0)
+    })
+    dp[0][0] = 1;
+
+    for (let i = 1; i < len + 1; i++) {
+      const coin = coins[i - 1];
+      for (let j = 0; j < amount + 1; j++) {
+        dp[i][j] = dp[i - 1][j]
+        for (let k = 1; k * coin < j + 1; k++) {
+          dp[i][j] += dp[i - 1][j - k * coin]
+        }
+      }
+    }
+    return dp[len][amount]
+  };
+
+  /**
+   * 279. 完全平方数
+   * 动态规划
+   */
+  var numSquares = function (n) {
+    const arr = [];
+    let num = 1;
+    while (num * num <= n) {
+      arr.push(num * num)
+      num++
+    }
+
+    if (n === arr[arr.length - 1]) {
+      return 1
+    }
+
+    const len = arr.length;
+    const dp = new Array(len + 1).fill(0).map(it => new Array(n + 1).fill(0))
+
+    dp[0].fill(Infinity)
+    dp[0][0] = 0;
+
+    for (let i = 1; i <= len; i++) {
+      const each = arr[i - 1];
+      debugger
+      for (let j = 1; j <= n; j++) {
+        dp[i][j] = dp[i - 1][j]
+        for (let k = 1; k * each <= j; k++) {
+          if (dp[i - 1][j - k * each] !== Infinity) {
+            dp[i][j] = Math.min(dp[i][j], dp[i - 1][j - k * each] + k)
+          }
+        }
+      }
+    }
+    return dp[len][n]
+  };
+
+
+  /**
+   *852. 山脉数组的峰顶索引
+   */
+  var peakIndexInMountainArray = function (arr) {
+    let f = 0,
+      l = arr.length;
+    while (f < l) {
+      debugger
+      const mid = Math.floor(f + (l - f) / 2);
+      if (arr[mid] < arr[mid + 1] && arr[mid - 1] < arr[mid]) {
+        f = mid + 1;
+      } else if (arr[mid] > arr[mid + 1] && arr[mid - 1] > arr[mid]) {
+        l = mid;
+      } else {
+        return mid
+      }
+    }
+  };
+
+  /**
+   * 877. 石子游戏
+   */
+  var stoneGame = function (piles) {
+
+    const len = piles.length;
+    let arr1 = [],
+      arr2 = [];
+
+    function getTot(arr, tot1, tot2, isF) {
+      if (arr.length > 0) {
+        const len = arr.length;
+        if (isF) {
+          const midLeft = tot1 + arr[0]
+          const midRight = tot1 + arr[len - 1]
+          getTot(arr.slice(1), midLeft, tot2, !isF)
+          if (len > 1) {
+
+            getTot(arr.slice(0, len - 1), midRight, tot2, !isF)
+          }
+
+        } else {
+          const midLeft = tot2 + arr[0]
+          const midRight = tot2 + arr[len - 1]
+          getTot(arr.slice(1), tot1, midLeft, !isF)
+          if (len > 1) {
+
+            getTot(arr.slice(0, len - 1), tot1, midRight, !isF)
+          }
+        }
+
+      } else {
+        arr1.push(tot1);
+        arr2.push(tot2)
+      }
+    }
+
+    getTot(piles, 0, 0, true);
+
+    console.log(arr1, arr2);
+
+    return Math.max(...arr1) > Math.max(...arr2)
+  };
+
+  /**
+   *65. 有效数字
+   */
+  var isNumber = function (s) {
+    return !Number.isNaN(parseFloat(s)) && parseFloat(s) == s && s.indexOf('Infinity') === -1
+  };
+
+  /**
+   *483. 最小好进制
+   */
+  var smallestGoodBase = function (n) {
+    /**
+     * 13 => 3 => '111'
+     * 
+     */
+    const nVal = parseInt(n);
+    debugger
+    // Math.log(nVal) / Math.log(2)返回以2位底的指数
+    // 求1的数量的范围，最小为2进制，所有可求最多的1的数量
+    const mMax = Math.floor(Math.log(nVal) / Math.log(2));
+    for (let m = mMax; m > 1; m--) {
+      // 求当前1的数量对应的底数K
+      const k = BigInt(Math.floor(Math.pow(nVal, 1.0 / m)));
+      if (k > 1) {
+        // 求指数幂的和，看是否等于原数值。
+        let mul = BigInt(1),
+          sum = BigInt(1);
+        for (let i = 1; i <= m; i++) {
+          mul *= k;
+          sum += mul;
+        }
+        if (sum === BigInt(n)) {
+          return k + '';
+        }
+      }
+    }
+    // 若没有，则返回原数值减一
+    return (BigInt(n) - BigInt(1)) + '';
+  };
+
+  /**
+   * 1239. 串联字符串的最大长度
+   */
+  var maxLength = function (arr) {
+    const len = arr.length;
+    let sum = [
+      []
+    ];
+
+    for (let i = 0; i < arr.length; i++) {
+      const tempRes = sum.map(subset => {
+        const one = subset.concat([]);
+        one.push(arr[i]);
+        return one;
+      })
+      sum = sum.concat(tempRes);
+    }
+    return Math.max(...sum.map(item => {
+      const str = item.join('')
+      if (validate(item.join(''))) {
+        return str.length;
+      }
+      return 0
+    }));
+
+    function validate(str) {
+      const set = new Set(str.split(""));
+      return set.size === str.length
+    }
+  };
+
+  /**
+   * 求数组的所有子序列
+   */
+  function allSubsets(arr) {
+    let res = [
+      []
+    ];
+    for (let i = 0; i < arr.length; i++) {
+      const tempRes = res.map(subset => {
+        const one = subset.concat([]);
+        one.push(arr[i]);
+        return one;
+      })
+      res = res.concat(tempRes);
+    }
+    return res;
+  }
+
+  /**
+   * 1600. 皇位继承顺序
+   */
+  var ThroneInheritance = function (kingName) {
+    this.perMap = new Map();
+    this.order = [kingName];
+    this.lane = this.init(kingName)
+    this.perMap.set(kingName, this.lane)
+    return null
+  };
+
+  ThroneInheritance.prototype.init = function (name) {
+    return {
+      next: null,
+      last: "",
+      children: [],
+      delete: false,
+      name,
+    }
+  }
+
+  /** 
+   * @param {string} parentName 
+   * @param {string} childName
+   * @return {void}
+   */
+  ThroneInheritance.prototype.birth = function (parentName, childName) {
+    const curP = this.perMap.get(parentName);
+    const init = this.init(childName);
+    debugger
+    if (curP.last) {
+      let prev = this.perMap.get(curP.last);
+      while (prev.last) {
+        prev = this.perMap.get(prev.last)
+      }
+      init.next = prev.next;
+      prev.next = init
+    } else {
+      init.next = curP.next;
+      curP.next = init;
+    }
+    this.perMap.set(childName, init);
+    curP.last = childName;
+
+  };
+
+  /** 
+   * @param {string} name
+   * @return {void}
+   */
+  ThroneInheritance.prototype.death = function (name) {
+    const cur = this.perMap.get(name);
+    cur.delete = true;
+  };
+
+  /**
+   * @return {string[]}
+   */
+  ThroneInheritance.prototype.getInheritanceOrder = function () {
+    const arr = [];
+    let cur = this.lane
+    while (cur) {
+      cur.delete ? null : arr.push(cur.name)
+      cur = cur.next;
+    }
+    console.log(arr)
+    return arr;
+  };
+
+
+  /**
+   * 401. 二进制手表
+   */
+  var readBinaryWatch = function (turnedOn) {
+    const ans = [];
+    for (let i = 0; i < 1024; ++i) {
+      let h = i >> 6,
+        m = i & 63; // 用位运算取出高 4 位和低 6 位
+      if (h < 12 && m < 60 && i.toString(2).split('0').join('').length === turnedOn) {
+        debugger
+        ans.push(h + ":" + (m < 10 ? "0" : "") + m);
+      }
+    }
+    return ans;
+  };
+
+
+  /**
+   * 38. 字符串的排列 ????? 未理解
+   */
+  var permutation = function (s) {
+    const arr = s.split("");
+    const res = [];
+
+    function dfs(x) {
+      if (x === arr.length - 1) {
+        res.push(arr.join(""))
+        return
+      }
+
+      const set = new Set();
+      for (let i = x; i < arr.length; i++) {
+        if (set.has(arr[i])) {
+          continue
+        }
+        set.add(arr[i]);
+
+        [arr[i], arr[x]] = [arr[x], arr[i]] // 交换， 将 arr[i] 固定在第 x 位
+        dfs(x + 1) // 开启固定第 x + 1 位字符
+        [arr[i], arr[x]] = [arr[x], arr[i]] // 恢复交换
+      }
+    }
+
+    dfs(0)
+    return res
+  };
+
+  /**
+   * 168. Excel表列名称
+   * 
+   * charCodeAt fromCharCode
+   */
+  var convertToTitle = function (columnNumber) {
+
+    let strArr = [];
+
+    const getCur = (num) => {
+      debugger
+      const rest = num % 26;
+      if (num === 0) return
+      if (rest > 0) {
+        strArr.unshift(String.fromCharCode(64 + rest));
+        getCur(Math.floor(num / 26))
+      } else {
+        strArr.unshift('Z')
+        if (num / 26 > 1) {
+          getCur(Math.floor(num / 26) - 1)
+        }
+      }
+    }
+    getCur(columnNumber)
+    console.log(strArr.join(""));
+    return strArr.join("");
+  };
+
+  /**
+   * 171. Excel表列序号
+   * @param {string} columnTitle
+   * @return {number}
+   */
+  var titleToNumber = function (columnTitle) {
+
+    const F = "A".charCodeAt() - 1;
+
+    const arr = columnTitle.split('');
+
+    let len = arr.length,
+      i = 0;
+    let ans = 0;
+    while (i < arr.length) {
+      let cha = arr[i];
+      let rest = cha.charCodeAt() - F;
+      ans += rest * Math.pow(26, len - i - 1);
+      i++;
+    }
+    return ans
+  };
+
+  titleToNumber("AAA");
+
+  /**
+   * 15. 二进制中1的个数
+   */
+  var hammingWeight = function (n) {
+    const num = n.toString(2);
+    let ans = 0
+    for (let i = 0; i < num.length; i++) {
+      if (num[i] == 1) {
+        ans++
+      }
+    }
+    console.log(ans)
+    return ans
+  };
+
+  /**
+   * 07. 传递信息
+   */
+  var numWays = function (n, relation, k) {
+
+    const rLen = relation.length;
+    const map = new Map();
+    for (let val of relation) {
+      const [index, next] = val;
+      if (map.has(index)) {
+        map.get(index).push(next)
+      } else {
+        map.set(index, [next])
+      }
+    }
+    console.log(map)
+
+    let ans = 0;
+
+    const message = (index, tot) => {
+      debugger
+      const canNext = map.get(index);
+      tot += 1
+      if (tot > k || !canNext) return
+      for (let next of canNext) {
+        debugger
+        if (next === n - 1) {
+          if (tot === k) {
+            ans++
+          } else {
+            message(next, tot)
+          }
+        } else {
+          message(next, tot)
+        }
+      }
+    }
+
+
+    message(0, 0);
+    console.log(ans)
+    return ans
+  };
+
+  /**
+   * 1833. 雪糕的最大数量
+   */
+  var maxIceCream = function (costs, coins) {
+    const len = costs.length;
+
+
+    const quickSort = (arr) => {
+      if (arr.length < 2) {
+        return arr
+      }
+      debugger
+      const base = arr[0];
+      const left = [],
+        right = [];
+
+      for (let i = 1; i < arr.length; i++) {
+        const val = arr[i]
+        if (val < base) {
+          left.push(val)
+        } else {
+          right.push(val)
+        }
+      }
+
+      return [...quickSort(left), base, ...quickSort(right)]
+    }
+
+    costs = quickSort(costs);
+    let ans = 0;
+    console.log(costs)
+    costs.reduce((tot, next) => {
+      debugger
+      tot += next;
+      if (tot <= coins) ans++
+      return tot
+    }, 0)
+    console.log(ans)
+    return ans;
+  };
+
+  /**
+   * 451. 根据字符出现频率排序
+   */
+  var frequencySort = function (s) {
+    const map = new Map();
+
+    for (let str of s) {
+      if (map.get(str)) {
+        map.set(str, map.get(str) + 1)
+      } else {
+        map.set(str, 1)
+      }
+    }
+
+    const arr = Array.from(map);
+
+    arr.sort((x, y) => y[1] - x[1])
+
+    let str = '';
+    for (let val of arr) {
+      const [ch, cnt] = val;
+      str += new Array(cnt).fill(ch).join("")
+    }
+
+    return str
+  };
+
+  /**
+   * @param {number[]} nums
+   * 645. 错误的集合
+   * @return {number[]}
+   */
+  var findErrorNums = function (nums) {
+
+    const len = nums.length;
+
+    nums.sort((x, y) => x - y);
+    const set = new Set(nums);
+
+    let que = 0;
+    let copy = 0;
+
+    for (let i = 1; i <= len; i++) {
+      if (!set.has(i)) {
+        que = i
+      }
+
+      if (nums[i - 1] === nums[i]) {
+        copy = nums[i]
+      }
+    }
+
+    return [copy, que]
+  };
+
+
+  /**
+   * 1418. 点菜展示表
+   * @param {string[][]} orders
+   * @return {string[][]}
+   */
+  var displayTable = function (orders) {
+
+    const foodSet = new Set();
+    const tableMap = new Map();
+
+    for (let val of orders) {
+      foodSet.add(val[2])
+      if (tableMap.get(val[1])) {
+        const tableIn = tableMap.get(val[1]);
+        if (tableIn.get(val[2])) {
+          tableIn.set(val[2], tableIn.get(val[2]) + 1)
+        } else {
+          tableIn.set(val[2], 1)
+        }
+      } else {
+        const map = new Map();
+        map.set(val[2], 1);
+        tableMap.set(val[1], map)
+      }
+    }
+
+    const first = Array.from(foodSet).sort();
+    const content = Array.from(tableMap).sort((x, y) => x[0] - y[0]);
+
+    const res = []
+
+    content.forEach(item => {
+      const [table, food] = item
+      const arr = [];
+      arr.push(table);
+      first.forEach(it => {
+        arr.push(food.has(it) ? food.get(it).toString() : '0')
+      })
+      res.push(arr)
+    })
+    first.unshift("Table")
+    res.unshift(first);
+    console.log(res);
+    return res
+  };
+
+  /**
+   * 1711. 大餐计数
+   * @param {number[]} deliciousness
+   * @return {number}
+   */
+  var countPairs = function (deliciousness) {
+    const constant = 1000000007
+    let maxD = 0;
+    // 获取数组中的最大值
+    for (let val of deliciousness) {
+      maxD = Math.max(val, maxD)
+    }
+    const maxDe = maxD * 2;
+    // 记录数组中每一项出现的次数
+    let map = new Map();
+    let res = 0;
+    for (let val of deliciousness) {
+      // 循环遍历数组中可能凑成的2的幂
+      for (let sum = 1; sum <= maxDe; sum <<= 1) {
+        const count = map.get(sum - val) || 0
+        res = (count + res) % constant
+      }
+      // 记录数组中的每一项已经出现的次数
+      map.set(val, (map.get(val) || 0) + 1)
+    }
+    console.log(res)
+    return res
+  };
+
+  /**
+   * 930. 和相同的二元子数组
+   * 子数组 !== 子集
+   * 
+   * @param {number[]} nums
+   * @param {number} goal
+   * @return {number}
+   */
+  var numSubarraysWithSum = function (nums, goal) {
+
+    // let cnt = 0;
+    // let len = nums.length;
+    // for (let i = 0; i < len; i++) {
+    //   let tot = nums[i];
+    //   if (tot === goal) cnt++
+    //   if (i === len - 1) break
+    //   for (let j = i + 1; j < len; j++) {
+    //     if (tot + nums[j] === goal) {
+    //       cnt++
+    //     }
+    //     if (tot + nums[j] > goal) {
+    //       break
+    //     }
+    //     tot += nums[j]
+    //   }
+    // }
+    // console.log(cnt)
+    // return cnt
+
+    let sum = 0,
+      len = nums.length,
+      cnt = 0;
+    const map = new Map();
+    for (let val of nums) {
+      debugger
+      map.set(sum, (map.get(sum) || 0) + 1)
+      sum += val
+      cnt += map.get(sum - goal) || 0
+    }
+    console.log(cnt);
+    return cnt
+  };
+
+  /**
+   * 面试题 17.10. 主要元素
+   * @param {number[]} nums
+   * @return {number}
+   */
+  var majorityElement = function (nums) {
+    const sub = Math.floor(nums.length / 2);
+    const map = new Map();
+
+    for (let val of nums) {
+      const num = map.get(val) || 0;
+      map.set(val, num + 1)
+      if (num + 1 > sub) return val
+    }
+    return -1
+  };
+
+  // console.log(majorityElement([2,2,1,1,1,2,2]))
+
+
+  /**
+   * @param {number} w 工人数量
+   * @param {Array<number>} p 金矿开采所需的工人数量
+   * @param {Array<number>} g 金矿储量
+   * @returns {number}
+   * 
+   * 链接 https://www.sunbohao.com/font/content-detail?contentId=67
+   */
+  function getBestColMiningV2(w, p, g) {
+    const dp = new Array(g.length + 1)
+    dp.fill(new Array(w + 1).fill(0));
+    console.log(dp)
+
+    for (let i = 1; i < g.length + 1; i++) {
+      for (let j = 1; j < w + 1; j++) {
+        if (j < p[i - 1]) {
+          dp[i][j] = dp[i - 1][j]
+        } else {
+          dp[i][j] = Math.max(
+            dp[i - 1][j],
+            dp[i - 1][j - p[i - 1]] + g[i - 1]
+          )
+        }
+      }
+    }
+    return dp[g.length][w]
+  }
+
+  // console.log(getBestColMiningV2(10, [5, 5, 3, 4, 3], [400, 500, 200, 300, 350]))
+
+
+  /**
+   * Definition for a binary tree node.
+   * function TreeNode(val) {
+   *     this.val = val;
+   *     this.left = this.right = null;
+   * }
+   */
+  /**
+   * 863. 二叉树中所有距离为 K 的结点
+   * @param {TreeNode} root
+   * @param {TreeNode} target
+   * @param {number} k
+   * @return {number[]}
+   */
+  const root = {
+    val: 3,
+    left: {
+      val: 5,
+      left: {
+        val: 6,
+        left: null,
+        right: null,
+      },
+      right: {
+        val: 2,
+        left: {
+          val: 7,
+          left: null,
+          right: null,
+        },
+        right: {
+          val: 4,
+          left: null,
+          right: null,
+        },
+      },
+    },
+    right: {
+      val: 1,
+      left: {
+        val: 0,
+        left: null,
+        right: null
+      },
+      right: {
+        val: 8,
+        left: null,
+        right: null
+      },
+    }
+  }
+  var distanceK = function (root, target, k) {
+
+    const map = new Map();
+    const ans = [];
+
+    const dfs = (root, parent = null) => {
+      map.set(root.val, {
+        parent,
+        left: root.left,
+        right: root.right
+      })
+      if (root.left) {
+        dfs(root.left, root.val)
+      }
+      if (root.right) {
+        dfs(root.right, root.val)
+      }
+    }
+
+    dfs(root, null)
+
+    const arr = []
+    const getRelate = (targ, from = null, cnt = 0) => {
+      debugger
+      if (cnt === k && targ !== target) {
+        arr.push(targ);
+        return;
+      }
+      cnt++
+      const info = map.get(targ);
+
+      if (typeof info.parent === 'number' && info.parent !== from) {
+        getRelate(info.parent, targ, cnt)
+      }
+      if (info.left && info.left.val !== from) {
+        getRelate(info.left.val, targ, cnt)
+      }
+      if (info.right && info.right.val !== from) {
+        getRelate(info.right.val, targ, cnt)
+      }
+    }
+
+    getRelate(target);
+    return arr
+
+  };
+  // console.log(distanceK(root, 5, 2))
+
+  /**
+   * @param {number} label
+   * @return {number[]}
+   * 1104. 二叉树寻路
+   */
+  var pathInZigZagTree = function (label) {
+
+    let deep = 1;
+    while (Math.pow(2, deep) - 1 < label) {
+      deep += 1
+    }
+
+    const arr = []
+
+    const getLine = (num, deep) => {
+      debugger
+      if (num === 1) {
+        return
+      }
+      let prevLast = Math.pow(2, deep - 1) - 1;
+      let prevIndex = Math.ceil((num - prevLast) / 2);
+      let parent = prevLast - prevIndex + 1;
+      arr.unshift(parent);
+      console.log(deep, prevLast, prevIndex, parent);
+      getLine(parent, deep - 1);
+    }
+
+    getLine(label, deep)
+
+    arr.push(label);
+
+    return arr
+
+  };
+
+  // console.log(pathInZigZagTree(26))
+
+  /**
+   * 1337. 矩阵中战斗力最弱的 K 行
+   * @param {number[][]} mat
+   * @param {number} k
+   * @return {number[]}
+   */
+  var kWeakestRows = function (mat, k) {
+
+    const len = mat.length;
+    const set = new Set();
+    const arr = []
+    for (let i = 0; i <= 100; i++) {
+      for (let j = 0; j < len; j++) {
+        if (set.has(j)) continue;
+        const item = mat[j];
+        if (!item[i]) {
+          arr.push(j);
+          set.add(j)
+        }
+      }
+      if (arr.length === len) {
+        break
+      }
+    }
+
+    return arr.slice(0, k)
+  };
+
+  /**
+   * 743. 网络延迟时间 ？？？？？
+   * @param {number[][]} times
+   * @param {number} n
+   * @param {number} k
+   * @return {number}
+   */
+  var networkDelayTime = function (times, n, k) {
+
+    const map = new Map();
+    const len = times.length;
+
+    for (let i = 0; i < len; i++) {
+      const item = times[i];
+      const [source, target, time] = item;
+      if (map.has(source)) {
+        map.set(source, {
+
+        })
+      } else {
+
+        map.set(source, {
+
+        })
+      }
+
+    }
+
+  };
+
+  // console.log(networkDelayTime([
+  //   [2, 1, 1],
+  //   [2, 3, 1],
+  //   [3, 4, 1]
+  // ], 4, 2))
+
+  /**
+   * 581. 最短无序连续子数组
+   * @param {number[]} nums
+   * @return {number}
+   */
+  var findUnsortedSubarray = function (nums) {
+
+    const n = nums.length;
+    let max = -Infinity;
+    let min = Infinity;
+    let start = -1;
+    let end = -1;
+
+
+    for (let i = 0; i < n; i++) {
+      debugger
+      // 使用变量max与当前数字比较
+      // 更新max为到目前为止出现的值的最大值
+      if (max > nums[i]) {
+        end = i;
+      } else {
+        max = nums[i];
+      }
+
+      // 从列表尾部开始遍历
+      // 使用变量min与当前数字比较
+      // 更新min为到目前为止出现的值的最小值
+      if (min < nums[n - i - 1]) {
+        start = n - i - 1;
+      } else {
+        min = nums[n - i - 1];
+      }
+    }
+
+    return end > -1 ? end - start + 1 : 0
+
+  };
+
+  // console.log(findUnsortedSubarray([2,1]))
+
+
+  /**
+   * 300. 最长递增子序列
+   * @param {number[]} nums
+   * @return {number}
+   */
+  var lengthOfLIS = function (nums) {
+
+    const len = nums.length;
+    // dp[i]是前i个数字中最长递增子序列的长度
+    const dp = new Array(len).fill(1);
+    let ans = 1;
+
+    console.log(dp);
+
+    for (let i = 1; i < len; i++) {
+      for (let j = 0; j < i; j++) {
+        debugger
+        if (nums[i] > nums[j]) {
+          // 取舍，看dp[i]和dp[j] + 1 的值哪个更大
+          dp[i] = Math.max(dp[i], dp[j] + 1)
+        }
+      }
+      // 比较i个数组最长递增子序列的长度和当前结果的大小
+      ans = Math.max(ans, dp[i])
+    }
+
+    return ans
+
+    // const len = nums.length;
+    // const tail = new Array(len);
+    // let res = 0;
+    // for (let num of nums) {
+    //   debugger
+    //   let i = 0,
+    //     j = res;
+    //   while (i < j) {
+    //     debugger
+    //     let m = Math.floor((i + j) / 2);
+    //     if (tail[m] < num) {
+    //       i = m + 1;
+    //     } else {
+    //       j = m
+    //     }
+    //   }
+    //   tail[i] = num;
+    //   if (res === j) res++
+
+    // }
+    // return res
+
+  };
+
+  // console.log(lengthOfLIS([10, 9, 2, 5, 3, 7, 101, 18]))
+
+  (function Fibo(count) {
+    let ans = 0;
+    let prev = 1;
+    let arr = [0]
+    while (ans < count) {
+      let mid = ans;
+      ans = prev + ans;
+      prev = mid;
+      arr.push(ans)
+    }
+    console.log(arr)
+  })(30)
+
+  function swap(arr, i, j) {
+    const temp = arr[i]
+    arr[i] = arr[j];
+    arr[j] = temp;
+  }
+
+  (function selectSort(arr) {
+    const len = arr.length;
+    for (let i = 0; i < len; i++) {
+      min = i;
+      for (let j = i + 1; j < len; j++) {
+        if (arr[min] > arr[j]) {
+          min = j
+        }
+      }
+      if (i != min) {
+        swap(arr, i, min)
+      }
+    }
+    console.log(arr);
+  })([1, 3, 1, 4, 5, 2, 7, 6, 9]);
+
+  (function reverse(str) {
+    let ans = str
+    let i = 0,
+      j = str.length - 1;
+    while (i < j) {
+      let tmp = ans[i]
+      ans[i] = ans[j];
+      ans[j] = tmp;
+      i++;
+      j--;
+    }
+    console.log(ans)
+    return ans
+  })('abcd')
+
+  ;
+  (function app(arr) {
+    const len = arr.length;
+    for (let i = 2; i < len; i++) {
+      if (arr[i] < arr[i - 1]) {
+        temp = arr[i];
+        let j = i - 1;
+        for (; arr[j] > temp; j--) {
+          arr[j + 1] = arr[j]
+        }
+        arr[j + 1] = temp
+      }
+    }
+    console.log(arr)
+  })([2, 4, 3, 7, 5, 6])
+
+
+  /**
+   * 剑指 Offer 42. 连续子数组的最大和
+   * @param {number[]} nums
+   * @return {number} 
+   */
+  ;
+  (function (arr) {
+    const len = arr.length;
+    // dp[i] 代表以元素 nums[i] 为结尾的连续子数组最大和
+    // 转移方程： 若 dp[i-1] ≤0 ，说明 dp[i - 1] 对 dp[i]产生负贡献，即 dp[i-1] + nums[i]还不如 nums[i] 本身大。
+
+    // 当 dp[i - 1] > 0 时：执行 dp[i] = dp[i-1] + nums[i]；
+    // 当 dp[i - 1] ≤0 时：执行 dp[i] = nums[i]；
+    const dp = new Array(len).fill(arr[0]);
+
+    for (let i = 1; i < len; i++) {
+      dp[i] = dp[i - 1] > 0 ? dp[i - 1] + arr[i] : arr[i];
+    }
+
+    return Math.max(...dp)
+
+  })([-2, 1, -3, 4, -1, 2, 1, -5, 4])
+
+  /**
+   * 1034. 边界着色
+   * bfs 深度优先遍历
+   * 连通分量：颜色相同，并且“连在”一起的方块，斜角的不算
+   * 连通分量的边界：
+   *  要么上下左右存在一个块不在连通分量里面
+   *  要么这个这个块的位置在整个grid的边框上
+   */
+  var colorBorder = function (grid, row, col, color) {
+    const m = grid.length,
+      n = grid[0].length;
+    const visited = new Array(m).fill(0).map(() => new Array(n).fill(0));
+    // 连通分量的边界列表
+    const borders = [];
+    // 目标位置的值
+    const originalColor = grid[row][col];
+    // 当前点的上下左右四个位置
+    const direc = [
+      [0, 1],
+      [0, -1],
+      [1, 0],
+      [-1, 0]
+    ];
+    const q = [];
+    q.push([row, col]);
+    visited[row][col] = true;
+    while (q.length) {
+      const node = q.pop();
+      const x = node[0],
+        y = node[1];
+
+      // 记录当前位置是否为边界
+      let isBorder = false;
+      for (let i = 0; i < 4; i++) {
+        const nx = direc[i][0] + x,
+          ny = direc[i][1] + y;
+          // nx >= 0 && nx < m 判断当前坐标的周边位置坐标是否在纵向的边界上
+          // ny >= 0 && ny < n 判断当前坐标的周边位置坐标是否在横向的边界上
+        if (!(nx >= 0 && nx < m && ny >= 0 && ny < n && grid[nx][ny] === originalColor)) {
+          isBorder = true;
+        } else if (!visited[nx][ny]) {
+          visited[nx][ny] = true;
+          q.push([nx, ny]);
+        }
+      }
+      // 如果是边界，则把当前点加入到连通分量的边界中
+      if (isBorder) {
+        borders.push([x, y]);
+      }
+    }
+    // 将连通分量的边界列表位置的值改为目标值
+    for (let i = 0; i < borders.length; i++) {
+      const x = borders[i][0],
+        y = borders[i][1];
+      grid[x][y] = color;
+    }
+    console.log(grid)
+    return grid;
+  };
+  colorBorder([
+    [1, 1, 1, 1, 1, 1],
+    [1, 1, 2, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1]
+  ], 0, 0, 3)
+</script>
+
+</html>
