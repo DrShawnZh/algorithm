@@ -26,3 +26,30 @@ var modifyString = function (s) {
 
   return arr.join("");
 };
+
+/**
+ * 1614. 括号的最大嵌套深度
+ * @param {string} s 有效括号字符串
+ * @return {number} s的嵌套深度
+ */
+var maxDepth = function (s) {
+  let arr = [0],
+    // 当前位置的嵌套深度
+    deep = 0;
+
+  // 判断s的长度为1或者0的情况直接返回深度为0
+  if (s.length === 1 || s.length === 0) return 0;
+
+  // 遍历字符串，遇到"("当前深度加1；遇到")"深度减1，并记录此时的深度，放到数组中
+  for (let i = 0; i < s.length; i++) {
+    const it = s[i];
+
+    if (it === "(") {
+      deep += 1;
+    } else if (it === ")") {
+      arr.push(deep);
+      deep -= 1;
+    }
+  }
+  return Math.max(...arr);
+};
