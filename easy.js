@@ -53,3 +53,29 @@ var maxDepth = function (s) {
   }
   return Math.max(...arr);
 };
+
+/**
+ * 219. 存在重复元素 II
+ * 题意：是否存在长度不超过的 [公式] 窗口，窗口内有相同元素
+ *
+ * 滑动窗口 哈希表
+ *
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {boolean}
+ */
+var containsNearbyDuplicate = function (nums, k) {
+  const len = nums.length;
+
+  const set = new Set();
+
+  for (let i = 0; i < len; i++) {
+    const it = nums[i];
+    if (i > k) {
+      set.delete(nums[i - k - 1]);
+    }
+    if (set.has(it)) return true;
+    set.add(it);
+  }
+  return false;
+};
