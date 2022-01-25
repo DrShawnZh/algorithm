@@ -79,3 +79,23 @@ var containsNearbyDuplicate = function (nums, k) {
   }
   return false;
 };
+
+/**
+ * 1688. 比赛中的配对次数
+ * dfs
+ * @param {number} n
+ * @return {number}
+ */
+var numberOfMatches = function (n, ans = 0) {
+  if (n === 1) return ans;
+  let left;
+  if ((n & 1) === 1) {
+    left = (n - 1) / 2;
+    ans += left;
+    return numberOfMatches(left + 1, ans);
+  } else {
+    left = n / 2;
+    ans += left;
+    return numberOfMatches(left, ans);
+  }
+};
