@@ -99,3 +99,21 @@ var numberOfMatches = function (n, ans = 0) {
     return numberOfMatches(left, ans);
   }
 };
+
+/**
+ * 326. 3 的幂
+ * @param {number} n
+ * @return {boolean}
+ */
+var isPowerOfThree = function (n) {
+  if (n === 1) return true;
+  if (n < 3) return false;
+  while (n > 3) {
+    if (n % 3 !== 0) return false;
+    n = n / 3;
+  }
+
+  return n === 3;
+};
+
+console.log(isPowerOfThree(6));
