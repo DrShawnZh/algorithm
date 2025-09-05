@@ -108,3 +108,95 @@ var maxAverageRatio = function (classes, extraStudents) {
   }
   return res / count;
 };
+
+/**
+ * 3025. 人员站位的方案数
+ * 给你一个  n x 2 的二维数组 points ，它表示二维平面上的一些点坐标，其中 points[i] = [xi, yi] 。
+ * 计算点对 (A, B) 的数量，其中
+ * A 在 B 的左上角，并
+ * 它们形成的长方形中（或直线上）没有其它点（包括边界）。
+ * 返回数量。
+ *
+ * @param {number[][]} points
+ * @return {number}
+ */
+
+var numberOfPairs = function (points) {
+  let ans = 0,
+    n = points.length;
+  for (let i = 0; i < n; i++) {
+    const x1 = points[i][0],
+      y1 = points[i][1];
+
+    for (let j = i + 1; j < n; j++) {
+      const x2 = points[j][0],
+        y2 = points[j][1];
+
+      const aLeftB = x1 <= x2 && y1 >= y2;
+      const aRightB = x1 >= x2 && y1 <= y2;
+
+      if (aLeftB || aRightB) {
+        let res = false;
+        for (let k = 0; k < n; k++) {
+          if (k !== i && k !== j) {
+            const x3 = points[k][0],
+              y3 = points[k][1];
+            if (aLeftB) {
+              if (x3 <= x2 && x3 >= x1 && y3 <= y1 && y3 >= y2) {
+                console.log(points[k], points[i], points[j]);
+                res = true;
+                break;
+              }
+            }
+            if (aRightB) {
+              if (x3 <= x1 && x3 >= x2 && y3 <= y2 && y3 >= y1) {
+                console.log(points[k], points[j], points[i]);
+                res = true;
+                break;
+              }
+            }
+          }
+        }
+
+        if (!res) {
+          ans++;
+        }
+      }
+    }
+  }
+
+  return ans;
+};
+
+const result = numberOfPairs([
+  [1, 1],
+  [2, 2],
+  [3, 3],
+]);
+console.log("3025. 人员站位的方案数", result);
+
+/**
+ * 2749. 得到整数零需要执行的最少操作数
+ * 给你两个整数：num1 和 num2 。
+ * 在一步操作中，你需要从范围 [0, 60] 中选出一个整数 i ，并从 num1 减去 2^i + num2 。
+ * 请你计算，要想使 num1 等于 0 需要执行的最少操作数，并以整数形式返回。
+ * 如果无法使 num1 等于 0 ，返回 -1 。
+ * @param {number} num1
+ * @param {number} num2
+ * @return {number}
+ */
+var makeTheIntegerZero = function (num1, num2) {
+  for (let i = 1; num1 - num2 * i >= i; i++) {
+    if (
+      (num1 - num2 * i)
+        .toString(2)
+        .split("")
+        .filter((item) => item === "1").length <= i
+    ) {
+      return i;
+    }
+  }
+  return -1;
+};
+
+console.log("2749. 得到整数零需要执行的最少操作数", makeTheIntegerZero(3, -2));
